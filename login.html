@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="เข้าสู่ระบบ Bluecat Store - ระบบบริหารจัดการร้านค้าและคลังสินค้าออนไลน์">
+  <title>เข้าสู่ระบบ | Bluecat Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy-950: #0a1128;
+      --navy-900: #0f172a;
+      --navy-800: #1e293b;
+      --navy-700: #1e3a8a;
+      --blue-600: #1d4ed8;
+      --blue-500: #2563eb;
+      --blue-400: #3b82f6;
+      --sky-500: #0284c7;
+      --sky-100: #e0f2fe;
+      --sky-50: #f0f9ff;
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+
+      --bg-page: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-light: #e2e8f0;
+      --border-input: #cbd5e1;
+
+      --success-bg: #ecfdf5;
+      --success-text: #065f46;
+      --success-border: #6ee7b7;
+      --error-bg: #fef2f2;
+      --error-text: #991b1b;
+      --error-border: #fca5a5;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --shadow-sm: 0 2px 8px -2px rgba(15, 23, 42, 0.06);
+      --shadow-card: 0 20px 45px -12px rgba(15, 23, 42, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+      --focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.25);
+
+      --font-sans: 'Noto Sans Thai', 'Sarabun', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --container-max: 1200px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(219, 234, 254, 0.85) 0%, transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(224, 242, 254, 0.9) 0%, transparent 45%),
+        linear-gradient(160deg, #f0f9ff 0%, #f8fafc 50%, #eff6ff 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--navy-900);
+      color: #ffffff;
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-weight: 600;
+      z-index: 9999;
+    }
+
+    .skip-link:focus {
+      top: 1rem;
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    a, button, input {
+      font-family: inherit;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    a:focus-visible, button:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin-inline: auto;
+      padding-inline: 1.5rem;
+      min-width: 0;
+    }
+
+    header, main, footer, section {
+      width: 100%;
+      min-width: 0;
+    }
+
+    /* ================= NAVBAR ================= */
+    .site-header {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 70px;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--navy-900);
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--navy-700) 0%, var(--blue-500) 100%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .nav-link:hover {
+      color: var(--blue-600);
+      background-color: var(--blue-50);
+    }
+
+    .nav-link.active {
+      color: var(--blue-600);
+      background-color: var(--blue-50);
+      font-weight: 600;
+    }
+
+    /* ================= LOGIN MAIN AREA ================= */
+    .login-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1.5rem, 4vw, 3.5rem) 1.25rem;
+    }
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .login-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+      padding: clamp(1.75rem, 4vw, 2.5rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--navy-700) 0%, var(--blue-500) 50%, var(--sky-500) 100%);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .login-logo-badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--navy-700) 0%, var(--blue-500) 100%);
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.875rem;
+      box-shadow: 0 8px 20px rgba(29, 78, 216, 0.25);
+    }
+
+    .login-brand-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--blue-600);
+      margin-bottom: 0.25rem;
+    }
+
+    .login-title {
+      font-size: clamp(1.45rem, 1.2rem + 0.8vw, 1.75rem);
+      font-weight: 700;
+      color: var(--navy-900);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .login-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    /* Form Controls */
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-label {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--navy-900);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .required-indicator {
+      color: var(--blue-600);
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 0.95rem;
+      color: var(--text-muted);
+      pointer-events: none;
+      display: inline-flex;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.78rem 1rem 0.78rem 2.75rem;
+      font-size: 0.96rem;
+      color: var(--navy-900);
+      background-color: var(--bg-page);
+      border: 1.5px solid var(--border-input);
+      border-radius: var(--radius-md);
+      outline: none;
+    }
+
+    .form-input.has-toggle {
+      padding-right: 4.5rem;
+    }
+
+    .form-input::placeholder {
+      color: #94a3b8;
+    }
+
+    .form-input:hover {
+      border-color: #94a3b8;
+    }
+
+    .form-input:focus {
+      background-color: var(--bg-surface);
+      border-color: var(--blue-500);
+      box-shadow: var(--focus-ring);
+    }
+
+    .password-toggle-btn {
+      position: absolute;
+      right: 0.55rem;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .password-toggle-btn:hover {
+      background-color: var(--blue-50);
+      color: var(--blue-600);
+    }
+
+    /* Checkbox Row */
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .checkbox-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      user-select: none;
+    }
+
+    .checkbox-input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--blue-600);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .checkbox-input:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .forgot-link {
+      color: var(--blue-600);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.88rem;
+    }
+
+    .forgot-link:hover {
+      text-decoration: underline;
+      color: var(--navy-700);
+    }
+
+    /* Submit Button */
+    .btn-login {
+      width: 100%;
+      padding: 0.88rem 1.5rem;
+      background: linear-gradient(135deg, var(--navy-700) 0%, var(--blue-500) 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      box-shadow: 0 6px 16px rgba(29, 78, 216, 0.25);
+    }
+
+    .btn-login:hover {
+      background: linear-gradient(135deg, var(--navy-900) 0%, var(--blue-600) 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(29, 78, 216, 0.34);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    /* Alert / Feedback Message */
+    .login-message {
+      display: none;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      font-weight: 500;
+      line-height: 1.5;
+      border: 1px solid transparent;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+
+    .login-message.show {
+      display: flex;
+    }
+
+    .login-message.success {
+      background-color: var(--success-bg);
+      color: var(--success-text);
+      border-color: var(--success-border);
+    }
+
+    .login-message.error {
+      background-color: var(--error-bg);
+      color: var(--error-text);
+      border-color: var(--error-border);
+    }
+
+    .message-icon {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Demo Credentials Helper Box */
+    .demo-box {
+      margin-top: 1.5rem;
+      padding: 1rem 1.15rem;
+      background-color: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .demo-box-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .demo-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--navy-700);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-fill-demo {
+      background: var(--bg-surface);
+      color: var(--blue-600);
+      border: 1px solid var(--blue-100);
+      border-radius: 6px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-fill-demo:hover {
+      background: var(--blue-600);
+      color: #ffffff;
+      border-color: var(--blue-600);
+    }
+
+    .demo-credentials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .demo-credentials code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      background: var(--bg-surface);
+      padding: 0.12rem 0.45rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-light);
+      color: var(--navy-900);
+      font-weight: 600;
+    }
+
+    .login-footer-links {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.88rem;
+    }
+
+    .login-footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .login-footer-links a:hover {
+      color: var(--blue-600);
+    }
+
+    /* Footer */
+    .site-footer {
+      padding: 1.25rem;
+      text-align: center;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-light);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding-inline: 1rem;
+      }
+
+      .navbar {
+        flex-wrap: wrap;
+        padding-block: 0.75rem;
+        gap: 0.5rem;
+      }
+
+      .navbar nav {
+        order: 3;
+        width: 100%;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+        overflow-x: auto;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--border-light);
+        gap: 0.25rem;
+      }
+
+      .nav-link {
+        padding: 0.45rem 0.65rem;
+        font-size: 0.86rem;
+        white-space: nowrap;
+      }
+
+      .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .login-footer-links {
+        flex-direction: column;
+        gap: 0.65rem;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">ข้ามไปยังฟอร์มเข้าสู่ระบบ</a>
+
+  <!-- Header Navigation -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="brand" aria-label="Bluecat Store หน้าแรก">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"></path>
+            <path d="M12 12l8-4.5"></path>
+            <path d="M12 12v9"></path>
+            <path d="M12 12L4 7.5"></path>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span>Bluecat Store</span>
+          <span class="brand-sub">Commerce &amp; Inventory Suite</span>
+        </span>
+      </a>
+
+      <nav aria-label="เมนูหลัก">
+        <ul class="nav-links">
+          <li>
+            <a href="index.html" class="nav-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              หน้าแรก
+            </a>
+          </li>
+          <li>
+            <a href="login.html" class="nav-link active" aria-current="page">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                <polyline points="10 17 15 12 10 7"></polyline>
+                <line x1="15" y1="12" x2="3" y2="12"></line>
+              </svg>
+              เข้าสู่ระบบ
+            </a>
+          </li>
+          <li>
+            <a href="admin.html" class="nav-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              แดชบอร์ดผู้ดูแล
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Login Content -->
+  <main id="main-content" class="login-main">
+    <div class="login-wrapper">
+      <section class="login-card" aria-labelledby="login-heading">
+        <div class="login-header">
+          <div class="login-logo-badge" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <div class="login-brand-name">Bluecat Store</div>
+          <h1 id="login-heading" class="login-title">เข้าสู่ระบบผู้ดูแลร้านค้า</h1>
+          <p class="login-subtitle">กรอกชื่อผู้ใช้งานและรหัสผ่านเพื่อเข้าจัดการคลังสินค้า</p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="login-form" action="admin.html" method="post" novalidate>
+          <!-- Username Input -->
+          <div class="form-group">
+            <label for="username" class="form-label">
+              <span>ชื่อผู้ใช้งาน (Username)</span>
+              <span class="required-indicator">จำเป็น</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </span>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                class="form-input"
+                placeholder="กรอกชื่อผู้ใช้งาน เช่น admin"
+                autocomplete="username"
+                spellcheck="false"
+                autocorrect="off"
+                autocapitalize="none"
+                enterkeyhint="next"
+                required
+              >
+            </div>
+          </div>
+
+          <!-- Password Input -->
+          <div class="form-group">
+            <label for="password" class="form-label">
+              <span>รหัสผ่าน (Password)</span>
+              <span class="required-indicator">จำเป็น</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </span>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-input has-toggle"
+                placeholder="กรอกรหัสผ่านของคุณ"
+                autocomplete="current-password"
+                enterkeyhint="done"
+                required
+              >
+              <button
+                type="button"
+                id="togglePasswordBtn"
+                class="password-toggle-btn"
+                aria-label="แสดงรหัสผ่าน"
+                aria-pressed="false"
+              >
+                แสดง
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember Checkbox -->
+          <div class="form-options">
+            <label for="remember" class="checkbox-group">
+              <input type="checkbox" id="remember" name="remember" class="checkbox-input" value="1">
+              <span>จดจำการเข้าสู่ระบบในอุปกรณ์นี้</span>
+            </label>
+            <a href="#demo-credentials" class="forgot-link" id="useDemoLink">ดูบัญชีทดลอง</a>
+          </div>
+
+          <!-- Status / Feedback Message -->
+          <div id="loginMessage" class="login-message" role="status" aria-live="polite"></div>
+
+          <!-- Login Submit Button -->
+          <button type="submit" id="loginBtn" class="btn-login">
+            <span>เข้าสู่ระบบ (Sign In)</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+          </button>
+        </form>
+
+        <!-- Demo Credentials Info Box -->
+        <div id="demo-credentials" class="demo-box" aria-label="ข้อมูลบัญชีทดลองสำหรับเข้าสู่ระบบ">
+          <div class="demo-box-header">
+            <span class="demo-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              บัญชีทดลองสำหรับ Workshop #2
+            </span>
+            <button type="button" id="fillDemoBtn" class="btn-fill-demo">กรอกข้อมูลทดลอง</button>
+          </div>
+          <div class="demo-credentials">
+            <span>Username: <code>admin</code></span>
+            <span>Password: <code>1234</code></span>
+          </div>
+        </div>
+
+        <!-- Bottom Navigation Links -->
+        <div class="login-footer-links">
+          <a href="index.html">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            กลับหน้าแรก (Home)
+          </a>
+          <a href="admin.html">
+            ข้ามไปหน้าแดชบอร์ด (Admin)
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    &copy; 2026 Bluecat Store &bull; ระบบบริหารจัดการร้านค้าและคลังสินค้า (Workshop #2)
+  </footer>
+
+  <!-- Vanilla JavaScript for Login Validation & UX -->
+  <script>
+    (function () {
+      const loginForm = document.getElementById('loginForm');
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const rememberCheckbox = document.getElementById('remember');
+      const loginMessage = document.getElementById('loginMessage');
+      const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+      const fillDemoBtn = document.getElementById('fillDemoBtn');
+      const useDemoLink = document.getElementById('useDemoLink');
+
+      // Valid demo accounts for Workshop #2 compatibility
+      const validAccounts = {
+        admin: ['1234', 'admin123', 'admin', 'password'],
+        bluecat: ['1234', 'bluecat123'],
+        user: ['1234']
+      };
+
+      // Restore remembered username if saved
+      try {
+        const savedUser = localStorage.getItem('bluecat_remember_user');
+        if (savedUser) {
+          usernameInput.value = savedUser;
+          rememberCheckbox.checked = true;
+        }
+      } catch (e) {
+        // Ignore storage errors in restricted environments
+      }
+
+      function renderMessage(type, textHtml) {
+        const isSuccess = type === 'success';
+        const iconSvg = isSuccess
+          ? '<svg class="message-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>'
+          : '<svg class="message-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+
+        loginMessage.className = 'login-message show ' + type;
+        loginMessage.innerHTML = iconSvg + '<div>' + textHtml + '</div>';
+      }
+
+      // Toggle Password Visibility
+      togglePasswordBtn.addEventListener('click', function () {
+        const isHidden = passwordInput.type === 'password';
+        passwordInput.type = isHidden ? 'text' : 'password';
+        togglePasswordBtn.textContent = isHidden ? 'ซ่อน' : 'แสดง';
+        togglePasswordBtn.setAttribute('aria-pressed', String(isHidden));
+        togglePasswordBtn.setAttribute('aria-label', isHidden ? 'ซ่อนรหัสผ่าน' : 'แสดงรหัสผ่าน');
+      });
+
+      // Fill Demo Credentials Helper
+      function fillDemoCredentials(e) {
+        if (e) e.preventDefault();
+        usernameInput.value = 'admin';
+        passwordInput.value = '1234';
+        rememberCheckbox.checked = true;
+        renderMessage(
+          'success',
+          'กรอกข้อมูลบัญชีทดลอง (<strong>admin</strong> / <strong>1234</strong>) เรียบร้อยแล้ว กดปุ่ม <strong>เข้าสู่ระบบ</strong> ได้เลย'
+        );
+        loginForm.querySelector('#loginBtn').focus();
+      }
+
+      fillDemoBtn.addEventListener('click', fillDemoCredentials);
+      useDemoLink.addEventListener('click', fillDemoCredentials);
+
+      // Handle Form Submission
+      loginForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const rawUsername = usernameInput.value.trim();
+        const usernameKey = rawUsername.toLowerCase();
+        const passwordVal = passwordInput.value.trim();
+
+        if (!rawUsername || !passwordVal) {
+          renderMessage('error', 'กรุณากรอกชื่อผู้ใช้งานและรหัสผ่านให้ครบถ้วนก่อนเข้าสู่ระบบ');
+          if (!rawUsername) {
+            usernameInput.focus();
+          } else {
+            passwordInput.focus();
+          }
+          return;
+        }
+
+        const allowedPasswords = validAccounts[usernameKey];
+        const isAuthenticated = Array.isArray(allowedPasswords) && allowedPasswords.includes(passwordVal);
+
+        if (isAuthenticated) {
+          try {
+            if (rememberCheckbox.checked) {
+              localStorage.setItem('bluecat_remember_user', rawUsername);
+            } else {
+              localStorage.removeItem('bluecat_remember_user');
+            }
+          } catch (e) {}
+
+          renderMessage(
+            'success',
+            'เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับคุณ <strong>' +
+              rawUsername +
+              '</strong> &mdash; กำลังพาท่านไปยัง <a href="admin.html" style="color: inherit; font-weight: 700; text-decoration: underline;">หน้าแดชบอร์ดผู้ดูแลระบบ</a>'
+          );
+
+          setTimeout(function () {
+            window.location.href = 'admin.html';
+          }, 1200);
+        } else {
+          renderMessage(
+            'error',
+            'เข้าสู่ระบบไม่สำเร็จ: ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง (บัญชีทดลองคือ <strong>admin</strong> และรหัสผ่าน <strong>1234</strong>)'
+          );
+          passwordInput.focus();
+          passwordInput.select();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
