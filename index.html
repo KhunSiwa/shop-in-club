@@ -925,15 +925,15 @@
 
           <div class="hero-metrics" aria-label="ข้อมูลภาพรวมระบบ">
             <div class="hero-metric-item">
-              <span class="hero-metric-value">6 รายการ</span>
+              <span id="homeMetricProducts" class="hero-metric-value">6 รายการ</span>
               <span class="hero-metric-label">สินค้าหลักในคลังปัจจุบัน</span>
             </div>
             <div class="hero-metric-item">
-              <span class="hero-metric-value">102 ชิ้น</span>
+              <span id="homeMetricUnits" class="hero-metric-value">102 ชิ้น</span>
               <span class="hero-metric-label">จำนวนสินค้าคงเหลือรวม</span>
             </div>
             <div class="hero-metric-item">
-              <span class="hero-metric-value">240,200 ฿</span>
+              <span id="homeMetricValue" class="hero-metric-value">240,200 ฿</span>
               <span class="hero-metric-label">มูลค่าคลังสินค้ารวมสุทธิ</span>
             </div>
           </div>
@@ -954,13 +954,13 @@
             <div class="preview-kpi-row">
               <div class="preview-kpi">
                 <div class="preview-kpi-label">มูลค่าคลังสินค้ารวม</div>
-                <div class="preview-kpi-num">240,200 ฿</div>
+                <div id="previewTotalValue" class="preview-kpi-num">240,200 ฿</div>
                 <span class="preview-kpi-tag">คำนวณอัตโนมัติ 100%</span>
               </div>
               <div class="preview-kpi">
                 <div class="preview-kpi-label">สินค้าพร้อมจัดส่ง</div>
-                <div class="preview-kpi-num">102 ชิ้น</div>
-                <span class="preview-kpi-tag">6 หมวดหมู่สินค้า</span>
+                <div id="previewTotalUnits" class="preview-kpi-num">102 ชิ้น</div>
+                <span id="previewTotalCats" class="preview-kpi-tag">5 หมวดหมู่สินค้า</span>
               </div>
             </div>
 
@@ -969,26 +969,28 @@
                 <span>รายการสินค้าไฮไลต์</span>
                 <span>มูลค่ารวม</span>
               </div>
-              <div class="preview-list-item">
-                <div>
-                  <div class="preview-item-name">Bluecat 4K UltraSharp Monitor 27"</div>
-                  <div class="preview-item-meta">รหัส BC-003 &bull; คงเหลือ 8 ชิ้น</div>
+              <div id="previewTopList">
+                <div class="preview-list-item">
+                  <div>
+                    <div class="preview-item-name">Bluecat 4K UltraSharp Monitor 27"</div>
+                    <div class="preview-item-meta">รหัส BC-003 &bull; คงเหลือ 8 ชิ้น</div>
+                  </div>
+                  <div class="preview-item-val">78,400 ฿</div>
                 </div>
-                <div class="preview-item-val">78,400 ฿</div>
-              </div>
-              <div class="preview-list-item">
-                <div>
-                  <div class="preview-item-name">Bluecat Mechanical Keyboard Pro</div>
-                  <div class="preview-item-meta">รหัส BC-001 &bull; คงเหลือ 15 ชิ้น</div>
+                <div class="preview-list-item">
+                  <div>
+                    <div class="preview-item-name">Bluecat Mechanical Keyboard Pro</div>
+                    <div class="preview-item-meta">รหัส BC-001 &bull; คงเหลือ 15 ชิ้น</div>
+                  </div>
+                  <div class="preview-item-val">48,000 ฿</div>
                 </div>
-                <div class="preview-item-val">48,000 ฿</div>
-              </div>
-              <div class="preview-list-item">
-                <div>
-                  <div class="preview-item-name">Bluecat USB-C Hub 8-in-1 Multiport</div>
-                  <div class="preview-item-meta">รหัส BC-004 &bull; คงเหลือ 30 ชิ้น</div>
+                <div class="preview-list-item">
+                  <div>
+                    <div class="preview-item-name">Bluecat USB-C Hub 8-in-1 Multiport</div>
+                    <div class="preview-item-meta">รหัส BC-004 &bull; คงเหลือ 30 ชิ้น</div>
+                  </div>
+                  <div class="preview-item-val">38,700 ฿</div>
                 </div>
-                <div class="preview-item-val">38,700 ฿</div>
               </div>
             </div>
           </div>
@@ -1017,9 +1019,9 @@
                 <line x1="12" y1="22.08" x2="12" y2="12"></line>
               </svg>
             </div>
-            <h3 class="feature-title">บริหารจัดการคลังสินค้าครบวงจร</h3>
+            <h3 class="feature-title">บริหารจัดการและแก้ไขคลังสินค้าได้ทันที</h3>
             <p class="feature-desc">
-              แสดงข้อมูลรหัสสินค้า ชื่อสินค้า หมวดหมู่ ราคาต่อหน่วย และจำนวนคงเหลืออย่างชัดเจนในรูปแบบตารางมาตรฐาน พร้อมแถบสีสลับแถวที่อ่านง่าย
+              แก้ไขรหัสสินค้า ชื่อสินค้า หมวดหมู่ ราคาต่อหน่วย และจำนวนคงเหลือได้โดยตรงในตาราง หรือเพิ่มและลบรายการสินค้าใหม่ได้ทุกเมื่อ
             </p>
             <a href="admin.html" class="feature-link">
               <span>เปิดตารางคลังสินค้า</span>
@@ -1039,7 +1041,7 @@
             </div>
             <h3 class="feature-title">คำนวณมูลค่าและสรุปยอดแม่นยำ</h3>
             <p class="feature-desc">
-              คำนวณมูลค่ารวมของสินค้าแต่ละรายการจากราคาต่อหน่วยคูณจำนวนชิ้น พร้อมสรุปยอดรวมในการ์ดภาพรวมและท้ายตารางที่ตรงกันทุกประการ
+              คำนวณมูลค่ารวมของสินค้าแต่ละรายการจากราคาต่อหน่วยคูณจำนวนชิ้นแบบเรียลไทม์ พร้อมสรุปยอดรวมในการ์ดภาพรวมและท้ายตารางอัตโนมัติ
             </p>
             <a href="admin.html" class="feature-link">
               <span>ตรวจสอบยอดรวมสินค้า</span>
@@ -1124,7 +1126,7 @@
         <div>
           <h3 class="footer-heading">ข้อมูลระบบ</h3>
           <ul class="footer-links">
-            <li><a href="admin.html">ตรวจสอบสต็อกสินค้า (6 รายการ)</a></li>
+            <li><a href="admin.html" id="footerStockLink">ตรวจสอบสต็อกสินค้า (6 รายการ)</a></li>
             <li><a href="login.html">บัญชีทดสอบ: admin / 1234</a></li>
           </ul>
         </div>
@@ -1136,5 +1138,66 @@
       </div>
     </div>
   </footer>
+
+  <!-- Sync Home Overview with Admin Inventory Edits -->
+  <script>
+    (function () {
+      try {
+        const raw = localStorage.getItem('bluecat_inventory_v2');
+        if (!raw) return;
+        const products = JSON.parse(raw);
+        if (!Array.isArray(products) || products.length === 0) return;
+
+        let totalUnits = 0;
+        let totalValue = 0;
+        const categories = new Set();
+
+        products.forEach(function (p) {
+          const price = Math.max(0, Number(p.price) || 0);
+          const qty = Math.max(0, Number(p.qty) || 0);
+          totalUnits += qty;
+          totalValue += price * qty;
+          if (p.category) categories.add(p.category);
+        });
+
+        const fmt = function (n) {
+          return Number(n).toLocaleString('en-US');
+        };
+
+        document.getElementById('homeMetricProducts').textContent = fmt(products.length) + ' รายการ';
+        document.getElementById('homeMetricUnits').textContent = fmt(totalUnits) + ' ชิ้น';
+        document.getElementById('homeMetricValue').textContent = fmt(totalValue) + ' ฿';
+        document.getElementById('previewTotalValue').textContent = fmt(totalValue) + ' ฿';
+        document.getElementById('previewTotalUnits').textContent = fmt(totalUnits) + ' ชิ้น';
+        document.getElementById('previewTotalCats').textContent = fmt(categories.size) + ' หมวดหมู่สินค้า';
+        document.getElementById('footerStockLink').textContent = 'ตรวจสอบสต็อกสินค้า (' + fmt(products.length) + ' รายการ)';
+
+        const sorted = products
+          .slice()
+          .sort(function (a, b) {
+            return (Number(b.price) * Number(b.qty)) - (Number(a.price) * Number(a.qty));
+          })
+          .slice(0, 3);
+
+        const listEl = document.getElementById('previewTopList');
+        if (listEl && sorted.length > 0) {
+          listEl.innerHTML = sorted
+            .map(function (p) {
+              const val = (Number(p.price) || 0) * (Number(p.qty) || 0);
+              return (
+                '<div class="preview-list-item">' +
+                  '<div>' +
+                    '<div class="preview-item-name">' + String(p.name || '').replace(/</g, '&lt;') + '</div>' +
+                    '<div class="preview-item-meta">รหัส ' + String(p.sku || '').replace(/</g, '&lt;') + ' &bull; คงเหลือ ' + fmt(p.qty) + ' ชิ้น</div>' +
+                  '</div>' +
+                  '<div class="preview-item-val">' + fmt(val) + ' ฿</div>' +
+                '</div>'
+              );
+            })
+            .join('');
+        }
+      } catch (e) {}
+    })();
+  </script>
 </body>
 </html>
